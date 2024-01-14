@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import Select
 from bs4 import BeautifulSoup
 
 def create_db():
@@ -32,7 +33,12 @@ def amazon_get(search_keyword):
 
     driver.find_element(By.CSS_SELECTOR, 'div.nav-search-field > input').send_keys(search_keyword)
     driver.find_element(By.CSS_SELECTOR, 'div.nav-right > div > span > input').click()
-    sleep(2)  # 検索結果が表示されるのを待つ
+    sleep(2)  # 検索結果が表示されるまで待つ
+
+    # 顧客レビューのランキングで検索結果をソート
+    sort_select = Select(driver.find_element(By.ID, 's-result-sort-select'))
+    sort_select.select_by_value('review-rank')
+    sleep(2)  # ソート結果が反映されるまで待つ
 
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, 'html.parser')
