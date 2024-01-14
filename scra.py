@@ -37,7 +37,6 @@ def amazon_get(search_keyword):
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, 'html.parser')
     product_elements = soup.find_all('span', class_='a-size-base-plus a-color-base a-text-normal')
-
     product_names = [elem.get_text() for elem in product_elements[:10]]  # 上位10商品の名前を取得
 
     driver.quit()
