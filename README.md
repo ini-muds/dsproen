@@ -1,0 +1,2 @@
+## 発表用スライド
+<p>[https://docs.google.com/presentation/d/1RcoFUYq_ITH1uHxROsApo74bCsylkKwgw-Wajq8otSw/edit#slide=id.g2af33f29338_0_15](https://docs.google.com/presentation/d/1RcoFUYq_ITH1uHxROsApo74bCsylkKwgw-Wajq8otSw/edit?usp=sharing)https://docs.google.com/presentation/d/1RcoFUYq_ITH1uHxROsApo74bCsylkKwgw-Wajq8otSw/edit?usp=sharinghttps://docs.google.com/presentation/d/1RcoFUYq_ITH1uHxROsApo74bCsylkKwgw-Wajq8otSw/edit?usp=sharing</p>
