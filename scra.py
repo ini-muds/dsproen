@@ -27,12 +27,7 @@ def amazon_get(search_keyword):
     search_input.send_keys(search_keyword)
     driver.find_element(By.CSS_SELECTOR, 'div.nav-right > div > span > input').click()
     sleep(3)  # 検索結果が表示されるまで待つ
-
-    # 顧客レビューのランキングで検索結果をソート
-    sort_select = Select(driver.find_element(By.ID, 's-result-sort-select'))
-    sort_select.select_by_value('review-rank')
-    sleep(3)  # ソート結果が反映されるまで待つ
-
+    
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, 'html.parser')
     product_elements = soup.find_all('span', class_='a-size-base-plus a-color-base a-text-normal')
