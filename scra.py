@@ -6,16 +6,12 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import Select
 from bs4 import BeautifulSoup
 
-def create_or_append_to_csv():
-    # CSVファイルを開く（存在しない場合は作成）
-    with open('amazon_products.csv', mode='a', newline='', encoding='utf-8') as file:
+def save_to_csv(filename, products):
+    # CSVファイルを開いて商品名を書き込む
+    with open(filename, mode='a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        return writer
-
-def save_to_csv(products, writer):
-    # 商品名をCSVファイルに保存
-    for product in products:
-        writer.writerow([product])
+        for product in products:
+            writer.writerow([product])
 
 def amazon_get(search_keyword):
     options = webdriver.ChromeOptions()
@@ -27,7 +23,8 @@ def amazon_get(search_keyword):
     driver.implicitly_wait(5)
     sleep(1)
 
-    driver.find_element(By.CSS_SELECTOR, 'div.nav-search-field > input').send_keys(search_keyword)
+    search_input = driver.find_element(By.CSS_SELECTOR, 'div.nav-search-field > input')
+    search_input.send_keys(search_keyword)
     driver.find_element(By.CSS_SELECTOR, 'div.nav-right > div > span > input').click()
     sleep(2)  # 検索結果が表示されるまで待つ
 
@@ -48,9 +45,8 @@ if __name__ == '__main__':
     keyword = input("Enter search keyword: ")
     product_names = amazon_get(keyword)
 
-    # CSVファイルへの書き込み用ライターを取得
-    csv_writer = create_or_append_to_csv()
-    save_to_csv(product_names, csv_writer)
+    # CSVファイルに商品名を保存
+    save_to_csv('amazon_products.csv', product_names)
 
     print(f"Saved the following products for '{keyword}':")
     for name in product_names:
