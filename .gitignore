@@ -1,13 +1,2 @@
 # 無視する
-amazon_products.csv
-amazon_products.db
-manga.csv
-education.csv
-literature.csv
-mystery.csv
-busyness.csv
-amazon_busyness.csv
-amazon_mystery.csv
-amazon_manga.csv
-amazon_education.csv
-amazon_literature.csv
+*.csv
