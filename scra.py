@@ -1,4 +1,4 @@
-import sqlite3
+import csv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
@@ -6,20 +6,16 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import Select
 from bs4 import BeautifulSoup
 
-def create_db():
-    conn = sqlite3.connect('amazon_products.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS products (name TEXT)''')
-    conn.commit()
-    conn.close()
+def create_or_append_to_csv():
+    # CSVファイルを開く（存在しない場合は作成）
+    with open('amazon_products.csv', mode='a', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        return writer
 
-def save_to_db(products):
-    conn = sqlite3.connect('amazon_products.db')
-    c = conn.cursor()
+def save_to_csv(products, writer):
+    # 商品名をCSVファイルに保存
     for product in products:
-        c.execute("INSERT INTO products VALUES (?)", (product,))
-    conn.commit()
-    conn.close()
+        writer.writerow([product])
 
 def amazon_get(search_keyword):
     options = webdriver.ChromeOptions()
@@ -49,10 +45,12 @@ def amazon_get(search_keyword):
     return product_names
 
 if __name__ == '__main__':
-    create_db()
     keyword = input("Enter search keyword: ")
     product_names = amazon_get(keyword)
-    save_to_db(product_names)
+
+    # CSVファイルへの書き込み用ライターを取得
+    csv_writer = create_or_append_to_csv()
+    save_to_csv(product_names, csv_writer)
 
     print(f"Saved the following products for '{keyword}':")
     for name in product_names:
