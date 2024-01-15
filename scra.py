@@ -21,17 +21,17 @@ def amazon_get(search_keyword):
 
     driver.get('https://www.amazon.co.jp/')
     driver.implicitly_wait(5)
-    sleep(1)
+    sleep(2)
 
     search_input = driver.find_element(By.CSS_SELECTOR, 'div.nav-search-field > input')
     search_input.send_keys(search_keyword)
     driver.find_element(By.CSS_SELECTOR, 'div.nav-right > div > span > input').click()
-    sleep(2)  # 検索結果が表示されるまで待つ
+    sleep(3)  # 検索結果が表示されるまで待つ
 
     # 顧客レビューのランキングで検索結果をソート
     sort_select = Select(driver.find_element(By.ID, 's-result-sort-select'))
     sort_select.select_by_value('review-rank')
-    sleep(2)  # ソート結果が反映されるまで待つ
+    sleep(3)  # ソート結果が反映されるまで待つ
 
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, 'html.parser')
