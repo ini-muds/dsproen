@@ -21,7 +21,7 @@ def amazon_get(search_keyword):
     driver.get('https://www.amazon.co.jp/')
 
     # 検索入力が表示されるのを待つ
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 60)
     search_input = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'input[name="field-keywords"]')))
 
     search_input.send_keys(search_keyword)
@@ -33,7 +33,7 @@ def amazon_get(search_keyword):
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, 'html.parser')
     product_elements = soup.find_all('span', class_='a-size-base-plus a-color-base a-text-normal')
-    product_names = [elem.get_text() for elem in product_elements[:20]]  # 上位20商品の名前を取得
+    product_names = [elem.get_text() for elem in product_elements[:40]]  # 上位20商品の名前を取得
 
     driver.quit()
     return product_names
