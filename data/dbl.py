@@ -1,16 +1,23 @@
 import sqlite3
+import pandas as pd
 
-def display_db():
-    conn = sqlite3.connect('amazon_products.db')
-    c = conn.cursor()
+def save_category_to_db(category):
+    # CSVファイルとデータベースファイルのパス
+    file_path = f'/Users/cider/Desktop/dsproen/local/{category}.csv'
+    database_file = f'/Users/cider/Desktop/dsproen/local/{category}.db'
 
-    c.execute("SELECT * FROM products")
-    rows = c.fetchall()
+    # データベースに接続
+    conn = sqlite3.connect(database_file)
 
-    for row in rows:
-        print(row[0])  # 商品名の表示
+    # CSVファイルを読み込み
+    df = pd.read_csv(file_path)
+    df.columns = ['title']
 
+    # データベースにデータを保存
+    df.to_sql('amazon_products', conn, if_exists='replace', index=False)
+
+    # 接続を閉じる
     conn.close()
 
-if __name__ == '__main__':
-    display_db()
+# 例として 'mystery' カテゴリを保存
+save_category_to_db('mystery')
